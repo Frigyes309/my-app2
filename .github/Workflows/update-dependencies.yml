@@ -1,0 +1,21 @@
+update:
+runs-on: ubuntu-latest
+permissions:
+contents: write
+steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
+    - run: |
+          git config --global user.name "Smuk Ferenc"
+          git config --global user.email "frigyes.smuk@gmail.com"
+    - run: |
+          echo "frigyes309:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo 'always-auth=true' >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+    - run: |
+          npm i
+          npm i @frigyes309/my-app2
+    - run: |
+          git add .
+          git commit -m "Update"
+          git push
